@@ -83,9 +83,6 @@ for val in list:
         os.remove(val[:-1])
 
 
-
-
-
 def updating_schedule():
     list = ['1kyrs.xlsx', '2kyrs.xlsx', '3kyrs.xlsx', '4kyrs.xlsx', 'mag1.xlsx', 'mag2.xlsx']
 
@@ -94,31 +91,42 @@ def updating_schedule():
             os.remove(val)
         if os.path.exists(val[:-1]):
             os.remove(val[:-1])
-    return  downloading_files(links_for_files)
+    return downloading_files(links_for_files)
 
 
 def printing_schedule():
-    string_schedule=""
+    string_monday = ''
+    string_tuesday = ''
+    string_wednesday = ''
+    string_thursday = ''
+    string_friday = ''
+    string_saturday = ''
     for fname in updating_schedule():
         mergeddicts = processing(fname)
         for key in mergeddicts:
             for name in mergeddicts[key]:
                 if 'Янгирова' in name:
                     if datetime.date.today() <= date_check(key) <= (
-                            datetime.date.today() + datetime.timedelta(days=7)):
-                        if '1kyrs' in fname:
-                            string_schedule += '1 курс бакалавриата' + '\n'
-                        elif '2kyrs' in fname:
-                            string_schedule += '2 курс бакалавриата' + '\n'
-                        elif '3kyrs' in fname:
-                            string_schedule += '3 курс бакалавриата' + '\n'
-                        elif '4kyrs' in fname:
-                            string_schedule += '4 курс бакалавриата' + '\n'
-                        elif 'mag1' in fname:
-                            string_schedule += '1 курс магистратуры' + '\n'
-                        elif 'mag2' in fname:
-                            string_schedule += '2 курс магистратуры' + '\n'
-                        string_schedule += str(key) + " " + str(name) + " " + str(mergeddicts[key][name]) + " " + '\n'+ '\n'
+                            datetime.date.today() + datetime.timedelta(days=6)):
+                        if '1kyrs' in fname or '2kyrs' in fname or '3kyrs' in fname or '4kyrs' in fname or\
+                                'mag1' in fname or 'mag2' in fname:
+                            string_for_adding = str(key) + '\n' + "предмет: " + str(name) + '\n' + "группы(очное): " \
+                                                + str(', '.join(mergeddicts[key][name])) + " " + '\n' + '\n'
+                        else:
+                            string_for_adding = str(key) + '\n' + "предмет: " + str(name) + '\n' + "группы: " \
+                                                + str(', '.join(mergeddicts[key][name])) + " " + '\n' + '\n'
+                        if 'Понедельник' in key:
+                            string_monday += string_for_adding
+                        elif 'Вторник' in key:
+                            string_tuesday += string_for_adding
+                        elif 'Среда' in key:
+                            string_wednesday += string_for_adding
+                        elif 'Четверг' in key:
+                            string_thursday += string_for_adding
+                        elif 'Пятница' in key:
+                            string_friday += string_for_adding
+                        elif 'Суббота' in key:
+                            string_saturday += string_for_adding
+    string_schedule = string_monday + '\n' + '\n' + string_tuesday + '\n' + '\n' + string_wednesday + '\n' + '\n' + \
+                      string_thursday + '\n' + '\n' + string_friday + '\n' + '\n' + string_saturday
     return string_schedule
-
-
