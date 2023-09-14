@@ -83,37 +83,34 @@ def printing_schedule():
     string_thursday = ['', '', '', '', '', '', '', '']
     string_friday = ['', '', '', '', '', '', '', '']
     string_saturday = ['', '', '', '', '', '', '', '']
-    flist = ['1kyrs.xlsx', '2kyrs.xlsx', '3kyrs.xlsx', '4kyrs.xlsx', 'mag1.xlsx', 'mag2.xlsx']
+    flist = ['4kyrsOZ.xlsx']
     for fname in flist:
         mergeddicts = processing(fname)
+        dd=None
         for key in mergeddicts:
             for name in mergeddicts[key]:
                 if 'Янгирова' in name:
-                    if datetime.date.today() <= date_check(key) <= (datetime.date.today()+datetime.timedelta(days=6)):
-                        if '1kyrs.xlsx' in fname or '2kyrs.xlsx' in fname or '3kyrs.xlsx' in fname or '4kyrs.xlsx' in fname:
-                            string_for_adding = str(key) + '\n' + "предмет: " + str(name)\
-                                                + '\n' + "Бакалавриат(очное) группы: "  \
-                                                + str(', '.join(mergeddicts[key][name])) + " " + '\n' + '\n'
-                        elif 'mag1.xlsx' in fname or 'mag2.xlsx' in fname:
-                            string_for_adding = str(key) + '\n' + "предмет: " + str(name) \
-                                                + '\n' + "Магистратура(очное) группы: " \
-                                                + str(', '.join(mergeddicts[key][name])) + " " + '\n' + '\n'
-                        else :
+                    if datetime.date.today() <= date_check(key) :
+                        if dd ==date_check(key):
                             string_for_adding = str(key) + '\n' + "предмет: " + str(name) \
                                                 + '\n' + "Бакалавриат(очно-заочное) группы: " \
-                                                + str(', '.join(mergeddicts[key][name])) + " " + '\n' + '\n'
+                                                + str(', '.join(mergeddicts[key][name])) + " " + '\n'+ '\n'
+                        else: string_for_adding = str(key) + '\n' + "предмет: " + str(name) \
+                                                + '\n' + "Бакалавриат(очно-заочное) группы: " \
+                                                + str(', '.join(mergeddicts[key][name])) + " " + '\n'
+                        dd=date_check(key)
                         if 'Понедельник' in key:
-                            string_monday = cheking_time(string_for_adding, string_monday)
+                            string_monday.append(string_for_adding)
                         elif 'Вторник' in key:
-                            string_tuesday = cheking_time(string_for_adding, string_tuesday)
+                            string_tuesday.append(string_for_adding)
                         elif 'Среда' in key:
-                            string_wednesday = cheking_time(string_for_adding, string_wednesday)
+                            string_wednesday.append(string_for_adding)
                         elif 'Четверг' in key:
-                            string_thursday = cheking_time(string_for_adding, string_thursday)
+                            string_thursday.append(string_for_adding)
                         elif 'Пятница' in key:
-                            string_friday = cheking_time(string_for_adding, string_friday)
+                            string_friday.append(string_for_adding)
                         elif 'Суббота' in key:
-                            string_saturday = cheking_time(string_for_adding, string_saturday)
+                            string_saturday.append(string_for_adding)
     string_schedule = str(''.join(string_monday)) + '\n' + '\n' + str(''.join(string_tuesday)) + '\n' + '\n' + str(
         ''.join(string_wednesday)) \
                       + '\n' + '\n' + \

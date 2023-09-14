@@ -8,7 +8,8 @@ links_for_files = ['https://inefb.ru/images/Raspisanie/Ochka/1kyrs.xls',
                    'https://inefb.ru/images/Raspisanie/Ochka/3kyrs.xls',
                    'https://inefb.ru/images/Raspisanie/Ochka/4kyrs.xls',
                    'https://inefb.ru/images/Raspisanie/Mag_Ochka/mag1.xls',
-                   'https://inefb.ru/images/Raspisanie/Mag_Ochka/mag2.xls']
+                   'https://inefb.ru/images/Raspisanie/Mag_Ochka/mag2.xls',
+                   'https://inefb.ru/images/Raspisanie/Ochka_Zaochka/4kyrsOZ.xls']
 
 
 def downloading_files(list_links):
@@ -23,7 +24,7 @@ def downloading_files(list_links):
 
 
 def updating_schedule():
-    list = ['1kyrs.xlsx', '2kyrs.xlsx', '3kyrs.xlsx', '4kyrs.xlsx', 'mag1.xlsx', 'mag2.xlsx']
+    list = ['1kyrs.xlsx', '2kyrs.xlsx', '3kyrs.xlsx', '4kyrs.xlsx', 'mag1.xlsx', 'mag2.xlsx', '4kyrsOZ.xlsx']
 
     for val in list:
         if os.path.exists(val):
