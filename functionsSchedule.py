@@ -56,10 +56,10 @@ def date_check(date_str_checking):
 def toStr(timedate, subgroups, typeT, flag=False):
     timedate = " ".join(timedate)
     name = list(subgroups.keys())[0]
-    begin = "\n" if flag else ""
-    stringForAdding = begin + str(timedate) + '\n' + "предмет: " + str(name) \
+    begin = '\n' if flag else ''
+    stringForAdding = begin + '<b>'+ str(timedate) + '\n' + "предмет: " + str(name) \
                       + '\n' + f"Бакалавриат({typeT}) группы: " \
-                      + str(', '.join(subgroups[name])) + " " + '\n\n'
+                      + str(', '.join(subgroups[name])) +'\n\n</b>'
     return stringForAdding
 
 
