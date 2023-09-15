@@ -1,9 +1,9 @@
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
 from functionsSchedule import printing_schedule
-import ochnoZaochnoe
 
-API_TOKEN = '6161483135:AAGp0OMY8i3ZKfEOFx-Q9j-osFu27akvRWg'
+
+API_TOKEN = '6459347226:AAHdwlZJK65OU8loNvZ9-IN74PElKKkQKbw'
 
 # Initialize bot and dispatcher
 bot = Bot(token=API_TOKEN)
@@ -43,14 +43,14 @@ async def start_command(message: types.Message):
 @dp.message_handler(commands=['расписание_очное'])
 async def desc_command2(message: types.Message):
     await bot.send_message(chat_id=message.chat.id,
-                           text=printing_schedule(),
+                           text=printing_schedule('очное'),
                            parse_mode="HTML")
     await message.delete()
 
 @dp.message_handler(commands=['расписание_очно-заочное'])
 async def desc_command2(message: types.Message):
     await bot.send_message(chat_id=message.chat.id,
-                           text=ochnoZaochnoe.printing_schedule(),
+                           text=printing_schedule('очно-заочное'),
                            parse_mode="HTML")
     await message.delete()
 
