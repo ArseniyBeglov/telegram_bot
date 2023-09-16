@@ -53,14 +53,17 @@ def date_check(date_str_checking):
     return date
 
 
-def toStr(timedate, subgroups, typeT, flag=False):
+def toStr(timedate, subgroups,form, typeT, flag=False):
     timedate = " ".join(timedate)
     name = list(subgroups.keys())[0]
     begin = '\n' if flag else ''
-    stringForAdding = begin + '<b>'+ str(timedate) + '\n' + "предмет: " + str(name) \
-                      + '\n' + f"Бакалавриат({typeT}) группы: " \
-                      + str(', '.join(subgroups[name])) +'\n\n</b>'
+    stringForAdding = begin + '<b>' + str(timedate) + '\n' + "предмет: " + str(name) \
+                      + '\n' + f"{form}({typeT}) группы: " \
+                      + str(', '.join(subgroups[name])) + '\n\n</b>'
     return stringForAdding
+
+def checkForm(file):
+    return 'Магистратура' if 'mag' in file else 'Бакалавриат'
 
 
 def printing_schedule(flag):
@@ -70,16 +73,19 @@ def printing_schedule(flag):
         flist = ['4kyrsOZ.xlsx']
     else:
         flist = []
-    lists = [list(processing(x).items()) for x in flist]
+    lists = [[y+(checkForm(x),) for y in processing(x).items()] for x in flist]
     vaiues = list(chain(*lists))
-    vaiues = [(x[0], {z: x[1][z] for z in x[1] if 'Янгирова' in z}) for x in vaiues if
+
+    vaiues = [(x[0], {z: x[1][z] for z in x[1] if 'Янгирова' in z}, x[2]) for x in vaiues if
               any([True for y in x[1] if 'Янгирова' in y])]
+
     vaiues = [x for x in vaiues if date_check(x[0][1]) >= datetime.date.today()]
     vaiues = sorted(vaiues, key=lambda x: date_check(x[0][1]))
     day = None
     newVaiues = ""
     for vaiue in vaiues:
-        newVaiues += toStr(*vaiue, flag,  day != vaiue[0][1])
+        newVaiues += toStr(*vaiue, flag, day != vaiue[0][1])
         day = vaiue[0][1]
     return newVaiues
 
+print(printing_schedule('очное'))
