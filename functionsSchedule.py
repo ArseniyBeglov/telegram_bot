@@ -33,6 +33,8 @@ def processing(filename):
             for i in range(2, len(row)):
                 group = group_row[i].value
                 group = str(group)
+                if 'Общая физическая подготовка пз' in str(row[i].value):
+                    break
                 if isinstance(row[i], openpyxl.cell.cell.MergedCell) and val is not None:
                     dict_teach_and_group[week_day_time][val] += [group.strip()]
                 elif row[i].value is not None:
@@ -70,7 +72,7 @@ def printing_schedule(flag):
     if flag == 'очное':
         flist = ['1kyrs.xlsx', '2kyrs.xlsx', '3kyrs.xlsx', '4kyrs.xlsx', 'mag1.xlsx', 'mag2.xlsx']
     elif flag == 'очно-заочное':
-        flist = ['4kyrsOZ.xlsx']
+        flist = ['2kyrsOZ.xlsx','4kyrsOZ.xlsx']
     else:
         flist = []
     lists = [[y+(checkForm(x),) for y in processing(x).items()] for x in flist]
@@ -79,13 +81,14 @@ def printing_schedule(flag):
     vaiues = [(x[0], {z: x[1][z] for z in x[1] if 'Янгирова' in z}, x[2]) for x in vaiues if
               any([True for y in x[1] if 'Янгирова' in y])]
 
-    vaiues = [x for x in vaiues if date_check(x[0][1]) >= datetime.date.today()]
+    vaiues = [x for x in vaiues if
+              datetime.date.today() <= date_check(x[0][1]) <= datetime.date.today() + datetime.timedelta(days=31)]
     vaiues = sorted(vaiues, key=lambda x: date_check(x[0][1]))
     day = None
     newVaiues = ""
     for vaiue in vaiues:
         newVaiues += toStr(*vaiue, flag, day != vaiue[0][1])
         day = vaiue[0][1]
+    print(newVaiues)
     return newVaiues
 
-print(printing_schedule('очное'))
