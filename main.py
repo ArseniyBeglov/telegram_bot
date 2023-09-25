@@ -3,7 +3,7 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemo
 from functionsSchedule import printing_schedule
 
 
-API_TOKEN = '6161483135:AAGp0OMY8i3ZKfEOFx-Q9j-osFu27akvRWg'
+API_TOKEN = ''
 
 # Initialize bot and dispatcher
 bot = Bot(token=API_TOKEN)
